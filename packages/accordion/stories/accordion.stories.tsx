@@ -135,3 +135,51 @@ export const stylingExpanded = () => (
     </AccordionItem>
   </Accordion>
 )
+
+const Fruit = ({ name }) => {
+  return (
+    <AccordionItem>
+      <AccordionButton>
+        <chakra.div flex="1" textAlign="left">
+          {name}
+        </chakra.div>
+        <AccordionIcon />
+      </AccordionButton>
+      <AccordionPanel>A {name} lives here</AccordionPanel>
+    </AccordionItem>
+  )
+}
+
+export function MappedMultiple() {
+  const [allowMultiple, setAllowMultiple] = React.useState(true)
+  const fruits = [{ name: "Apple" }, { name: "Orange" }, { name: "Banana" }]
+
+  return (
+    <div>
+      <button onClick={() => setAllowMultiple((allow) => !allow)}>
+        Set "allowMultiple" to {allowMultiple ? "false" : "true"}
+      </button>
+      {/* 'allowMulitple' is false, so it should only allow one item open at once */}
+      <Accordion allowMultiple={allowMultiple} defaultIndex={[0]}>
+        {fruits.map((item) => (
+          <Fruit key={item.name} name={item.name} />
+        ))}
+
+        {/* However if we remove the 'map' above and use the data below, 'allowMulitple'
+      set to false will work */}
+        {/* <AccordionItem>
+          <AccordionHeader>dd</AccordionHeader>
+          <AccordionPanel>Price: aa</AccordionPanel>
+        </AccordionItem>
+        <AccordionItem>
+          <AccordionHeader>dd</AccordionHeader>
+          <AccordionPanel>Price: aa</AccordionPanel>
+        </AccordionItem>
+        <AccordionItem>
+          <AccordionHeader>dd</AccordionHeader>
+          <AccordionPanel>Price: aa</AccordionPanel>
+        </AccordionItem> */}
+      </Accordion>
+    </div>
+  )
+}
